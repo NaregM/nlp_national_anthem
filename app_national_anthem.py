@@ -225,7 +225,7 @@ st.markdown("""
                 Made by [Nareg Mirzatuny](https://github.com/NaregM)
 
 Source code: [GitHub](
-                https://github.com/NaregM/planck_sz)
+                https://github.com/NaregM/nlp_national_anthem)
 
 """)
 st.markdown('-------------------------------------------------------------------------------')
