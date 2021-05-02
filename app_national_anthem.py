@@ -241,7 +241,7 @@ fig.update_traces(marker = dict(size = 13,
                                 line = dict(width = 2.0,
                                           color = 'black')))
 
-fig.update_layout(margin=dict(l=80, r=80, t=100, b=80), height = 700, width = 900)
+fig.update_layout(margin=dict(l=80, r=80, t=100, b=80), height = 700, width = 700)
 
 st.plotly_chart(fig)
 
@@ -263,7 +263,7 @@ if show_cos:
 
 # ======================================================================================================
 "# Word-count per national anthem"
-i_top_word_count = st.slider('Select number of countries to with highest word-count to show', 3, 12, 3)
+i_top_word_count = st.slider('Select number of countries with highest word-count to show', 7, 12, 7)
 
 na_df_sorted = na_df.sort_values(by = 'Word Count', ascending = False)
 
