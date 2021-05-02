@@ -209,7 +209,7 @@ Y = tsne.fit_transform(X.toarray())
 data = pd.DataFrame(Y, columns=['Y0', 'Y1'])
 data['Country'] = countries
 
-kk = st.slider(f'Select a number for clustering', 5, 70, 10)
+kk = st.slider(f'Select a number for clustering', 1, 70, 1)
 
 st.markdown('Interactive map of clustering of countries based on their national anthem lyrics.')
 
