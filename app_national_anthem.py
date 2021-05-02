@@ -272,7 +272,7 @@ fig = plt.figure(figsize = (5, 3))
 
 sns.barplot(x = "Word Count", y ="Country", data = na_df_sorted[:i_top_word_count], palette = sns_p, edgecolor = 'k')
 plt.margins(0.1)
-#plt.tight_layout()
+plt.tight_layout()
 st.pyplot(fig)
 
 
