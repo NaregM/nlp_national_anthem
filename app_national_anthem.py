@@ -23,7 +23,7 @@ import plotly.graph_objects as go
 from sklearn.feature_extraction.text import CountVectorizer,TfidfVectorizer
 
 sns.set_style("darkgrid")
-sns_p = sns.color_palette('Paired')
+sns_p = sns.color_palette('bright')
 
 # ==============================================
 
@@ -234,7 +234,7 @@ label_kk = 'Label' + str(kk)
 fig = go.Figure(data=go.Scatter(x = data['Y0'],
                                 y = data['Y1'],
                                 mode = 'markers',
-                                marker = dict(color = data[label_kk], colorscale='Turbo'),
+                                marker = dict(color = data[label_kk], colorscale='Rainbow'),
                                 text = data['Country'], opacity = 0.92, marker_symbol = data['Label']))
 
 fig.update_traces(marker = dict(size = 13,
@@ -263,7 +263,7 @@ if show_cos:
 
 # ======================================================================================================
 "# Word-count per national anthem"
-i_top_word_count = st.slider('Select number of countries with highest word-count to show', 7, 12, 7)
+i_top_word_count = st.slider('Select number of countries with highest word-count to show', 7, 32, 7)
 
 na_df_sorted = na_df.sort_values(by = 'Word Count', ascending = False)
 
@@ -272,6 +272,7 @@ fig = plt.figure(figsize = (5, 3))
 
 sns.barplot(x = "Word Count", y ="Country", data = na_df_sorted[:i_top_word_count], palette = sns_p, edgecolor = 'k')
 plt.margins(0.1)
+#plt.tight_layout()
 st.pyplot(fig)
 
 
