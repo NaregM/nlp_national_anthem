@@ -78,6 +78,7 @@ vocab = vectorizer.get_feature_names()
 st.markdown('## **_National Anthem_: An NLP and Statistical  Analysis**')
 
 st.markdown('This app provides interactive visual reports, NLP (natural language processing) analysis and statistical summaries based on the national anthem lyrics of more than 100 countries. Start by selecting a country from left panel.')
+'Data scraped from ', 'http://www.nationalanthems.info'
 st.markdown('-------------------------------------------------------------------------------')
 
 
@@ -150,7 +151,7 @@ st.markdown('-------------------------------------------------------------------
 
 cond_non_zero = np.where(pd.DataFrame(data = X.toarray(), columns=vocab).iloc[country_id, :] != 0)
 
-"# Most important words in national anthem lyrics of ", country, " : "
+"# Most important words in national anthem lyrics of ", country
 i_important_words = st.slider('Select number of prominant words to show', 3, 12, 3)
 df_tfidf = pd.DataFrame(np.array(vocab)[cond_non_zero][:i_important_words], columns = ['Prominant Words'])
 
