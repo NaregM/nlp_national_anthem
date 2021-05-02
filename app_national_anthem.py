@@ -34,14 +34,6 @@ from io import BytesIO
 response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/333.png")
 img = Image.open(BytesIO(response.content))
 
-response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/neut.png")
-neut = Image.open(BytesIO(response.content)).resize((200, 200))
-
-response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/pos.png")
-pos = Image.open(BytesIO(response.content)).resize((200, 200))
-
-response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/neg.png")
-neg = Image.open(BytesIO(response.content)).resize((200, 200))
 
 
 #image = Image.open('/home/nareg/Downloads/cmb-1.jpg')
@@ -109,11 +101,21 @@ st.write(country_lyrics)
 "## -->> ", country_sentiment
 
 if country_sentiment == "NEUTRAL":
+
+    response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/neut.png")
+    neut = Image.open(BytesIO(response.content)).resize((200, 200))
     st.image(neut, use_column_width = False)
 
 elif country_sentiment == "POSITIVE":
+
+    response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/pos.png")
+    pos = Image.open(BytesIO(response.content)).resize((200, 200))
     st.image(pos, use_column_width = False)
+
 else:
+
+    response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/neg.png")
+    neg = Image.open(BytesIO(response.content)).resize((200, 200))
     st.image(neg, use_column_width = False)
 
 
