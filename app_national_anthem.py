@@ -201,7 +201,8 @@ i_top_match = st.slider(f'Select number of countries with most similarity', 4, 1
 st.dataframe(np.array(countries)[argmax_n(COS_sim_m[country_id, :], i_top_match+1)][1:])
 
 st.markdown('---------------------------------------------------------------------------')
-st.markdown('## t-Distributed Stochastic Neighbor Embedding (t-SNE)')
+"# Clustering of countries based on their national anthem lyrics"
+st.markdown('### t-Distributed Stochastic Neighbor Embedding (t-SNE)')
 st.markdown('t-SNE is a statistical method for visualizing high-dimensional data by giving each datapoint a location in a two (or 3D) map.')
 
 #call from saved
