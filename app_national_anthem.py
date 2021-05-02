@@ -204,10 +204,11 @@ st.markdown('-------------------------------------------------------------------
 st.markdown('## t-Distributed Stochastic Neighbor Embedding (t-SNE)')
 st.markdown('t-SNE is a statistical method for visualizing high-dimensional data by giving each datapoint a location in a two (or 3D) map.')
 
-tsne = manifold.TSNE(n_components = 2, init = 'pca', random_state = 420)
-Y = tsne.fit_transform(X.toarray())
-data = pd.DataFrame(Y, columns=['Y0', 'Y1'])
-data['Country'] = countries
+#call from saved
+#tsne = manifold.TSNE(n_components = 2, init = 'pca', random_state = 420)
+#Y = tsne.fit_transform(X.toarray())
+#data = pd.DataFrame(Y, columns=['Y0', 'Y1'])
+#data['Country'] = countries
 
 kk = st.slider(f'Select a number for clustering', 5, 55, 10, 1)
 
