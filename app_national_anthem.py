@@ -238,10 +238,12 @@ fig.update_layout(height = 700, width = 900)
 st.plotly_chart(fig)
 
 
-if True:
+st.markdown('---------------------------------------------------------------------------')
+st.markdown('## Cosine of Similarity Matrix')
 
-    st.markdown('---------------------------------------------------------------------------')
-    st.markdown('## Cosine of Similarity Matrix')
+show_cos = st.checkbox('Show cosine of similarity matrix')
+
+if show_cos:
 
     fig = plt.figure(figsize = (5, 3))
     plt.imshow(np.array(COS_sim_m), cmap = 'jet', origin = 'lower')
@@ -251,7 +253,7 @@ if True:
 
 # ======================================================================================================
 "# Word-count per national anthem"
-i_top_word_count = st.slider('Select number of countries to show', 3, 12, 3)
+i_top_word_count = st.slider('Select number of countries to with highest word-count to show', 5, 12, 3)
 
 na_df_sorted = na_df.sort_values(by = 'Word Count', ascending = False)
 
