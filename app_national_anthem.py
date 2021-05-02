@@ -237,11 +237,11 @@ fig = go.Figure(data=go.Scatter(x = data['Y0'],
                                 marker = dict(color = data[label_kk], colorscale='Turbo'),
                                 text = data['Country'], opacity = 0.92, marker_symbol = data['Label']))
 
-fig.update_traces(marker = dict(size = 12,
+fig.update_traces(marker = dict(size = 13,
                                 line = dict(width = 2.0,
                                           color = 'black')))
 
-#fig.update_layout(height = 700, width = 900)
+fig.update_layout(margin=dict(l=80, r=80, t=100, b=80), height = 700, width = 900)
 
 st.plotly_chart(fig)
 
