@@ -233,13 +233,15 @@ fig.update_traces(marker = dict(size = 12,
                                 line = dict(width = 2.0,
                                           color = 'black')))
 
-fig.update_layout(height = 700, width = 900)
+#fig.update_layout(height = 700, width = 900)
 
 st.plotly_chart(fig)
 
 
 st.markdown('---------------------------------------------------------------------------')
 st.markdown('## Cosine of Similarity Matrix')
+
+"Cosine of similarity is a measure of similarity between two non-zero vectors () of an inner product space."
 
 show_cos = st.checkbox('Show cosine of similarity matrix')
 
@@ -253,7 +255,7 @@ if show_cos:
 
 # ======================================================================================================
 "# Word-count per national anthem"
-i_top_word_count = st.slider('Select number of countries to with highest word-count to show', 5, 12, 3)
+i_top_word_count = st.slider('Select number of countries to with highest word-count to show', 3, 12, 3)
 
 na_df_sorted = na_df.sort_values(by = 'Word Count', ascending = False)
 
