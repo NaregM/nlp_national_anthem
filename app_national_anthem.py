@@ -31,8 +31,8 @@ from PIL import Image
 import requests
 from io import BytesIO
 
-response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/ww5.png")
-img = Image.open(BytesIO(response.content)).resize((900, 100))
+response = requests.get("https://streamlit-data.s3-us-west-1.amazonaws.com/wf4.png")
+img = Image.open(BytesIO(response.content))#.resize((900, 100))
 
 
 
