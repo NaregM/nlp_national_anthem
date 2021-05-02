@@ -5,3 +5,5 @@ seaborn==0.9.0
 streamlit==0.62.1
 IPython
 sklearn
+plotly==4.14.3
+

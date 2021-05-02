@@ -11,6 +11,16 @@ import streamlit as st
 from collections import defaultdict
 
 from sklearn.feature_extraction.text import CountVectorizer,TfidfVectorizer
+from sklearn import manifold
+from sklearn.preprocessing import StandardScaler, Normalizer
+from sklearn.cluster import KMeans
+from sklearn.pipeline import make_pipeline
+
+from scipy.cluster.hierarchy import linkage, dendrogram, fcluster
+
+import plotly.graph_objects as go
+
+from sklearn.feature_extraction.text import CountVectorizer,TfidfVectorizer
 
 sns.set_style("darkgrid")
 sns_p = sns.color_palette('Paired')
@@ -46,12 +56,12 @@ nanthems = na_df['National Anthem'].tolist()
 country_anthem = defaultdict(list)
 
 for i, country_ in enumerate(countries):
-    
+
     country_anthem[country_].append(nanthems[i])
 
 country_anthem_all = []
 for key in country_anthem.keys():
-    
+
     country_anthem_all.append(' '.join(country_anthem[key]).encode('utf8'))
 
 vectorizer = TfidfVectorizer(min_df = 2,
@@ -67,7 +77,7 @@ vocab = vectorizer.get_feature_names()
 
 st.markdown('## **_National Anthem_: An NLP and Statistical  Analysis**')
 
-st.markdown('This app provides interactive visual reports, NLP analysis and statistical summaries based on the national anthem of more than 300 countries. Start by selecting a country from left panel.')
+st.markdown('This app provides interactive visual reports, NLP (natural language processing) analysis and statistical summaries based on the national anthem lyrics of more than 100 countries. Start by selecting a country from left panel.')
 st.markdown('-------------------------------------------------------------------------------')
 
 
@@ -89,11 +99,11 @@ country_sentiment = na_df[na_df.index == country]['sentiment'].values[0]
 country_id = np.where(na_df.index == country)[0][0]
 
 
-"## __The lyrics of national anthem of__ ", country, " : ", "\n" 
+"## __The lyrics of national anthem of__ ", country, " : ", "\n"
 st.write(country_lyrics)
 
 
-"## __Sentiment analysis result for__ ", country, 
+"## __Sentiment analysis result for__ ", country,
 "Possible outcomes: Negative, Neutral, Positive"
 "## -->> ", country_sentiment
 
@@ -141,7 +151,7 @@ st.markdown('-------------------------------------------------------------------
 cond_non_zero = np.where(pd.DataFrame(data = X.toarray(), columns=vocab).iloc[country_id, :] != 0)
 
 "# Most important words in national anthem lyrics of ", country, " : "
-i_important_words = st.slider('Number of prominant words: ', 3, 12, 3)
+i_important_words = st.slider('Select number of prominant words to show', 3, 12, 3)
 df_tfidf = pd.DataFrame(np.array(vocab)[cond_non_zero][:i_important_words], columns = ['Prominant Words'])
 
 st.write(df_tfidf.astype('object'))
@@ -149,36 +159,36 @@ st.write(df_tfidf.astype('object'))
 
 # ================================================================================
 def max_n(V, n):
-    
+
     """
     Returns the n largest elements from a numpy array.
     """
     argmax = []
-    
+
     VV = np.copy(V)
-    
+
     for i in range(n):
-        
+
         argmax.append(np.argmax(VV))
         VV[np.argmax(VV)] = -9999
-        
+
     return V[argmax]
 
 
 def argmax_n(V, n):
-    
+
     """
     Returns the n largest indices from a numpy array.
     """
     argmax = []
-    
+
     VV = np.copy(V)
-    
+
     for i in range(n):
-        
+
         argmax.append(np.argmax(VV))
         VV[np.argmax(VV)] = -9999
-        
+
     return argmax
 
 "# Countries with most similar lyrics to ", country, " "
@@ -189,8 +199,46 @@ i_top_match = st.slider(f'Select number of countries with most similarity', 4, 1
 
 st.dataframe(np.array(countries)[argmax_n(COS_sim_m[country_id, :], i_top_match+1)][1:])
 
+st.markdown('---------------------------------------------------------------------------')
+st.markdown('## t-Distributed Stochastic Neighbor Embedding (t-SNE)')
+st.markdown('t-SNE is a statistical method for visualizing high-dimensional data by giving each datapoint a location in a two (or 3D) map.')
+
+tsne = manifold.TSNE(n_components = 2, init = 'pca', random_state = 420)
+Y = tsne.fit_transform(X.toarray())
+data = pd.DataFrame(Y, columns=['Y0', 'Y1'])
+data['Country'] = countries
+
+kk = st.slider(f'Select a number for clustering', 5, 70, 10)
+
+st.markdown('Interactive map of clustering of countries based on their national anthem lyrics.')
+
+KMI = []
+
+for n in [kk]:#range(5, 120, 5):
+
+    km = KMeans(n_clusters = n)
+    km.fit(data[['Y0', 'Y1']])
+    KMI.append(km.inertia_)
+
+data['Label'] = km.labels_
+
+fig = go.Figure(data=go.Scatter(x = data['Y0'],
+                                y = data['Y1'],
+                                mode = 'markers',
+                                marker = dict(color = data['Label'], colorscale='Turbo'),
+                                text = data['Country'], opacity = 0.92, marker_symbol = data['Label']))
+
+fig.update_traces(marker = dict(size = 12,
+                                line = dict(width = 2.0,
+                                          color = 'black')))
+
+fig.update_layout(height = 700, width = 900)
+
+st.plotly_chart(fig)
+
+
 if True:
-    
+
     st.markdown('---------------------------------------------------------------------------')
     st.markdown('## Cosine of Similarity Matrix')
 
@@ -229,4 +277,3 @@ Source code: [GitHub](
 
 """)
 st.markdown('-------------------------------------------------------------------------------')
-
