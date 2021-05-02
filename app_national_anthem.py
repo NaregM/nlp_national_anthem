@@ -209,24 +209,28 @@ Y = tsne.fit_transform(X.toarray())
 data = pd.DataFrame(Y, columns=['Y0', 'Y1'])
 data['Country'] = countries
 
-kk = st.slider(f'Select a number for clustering', 1, 70, 1)
+kk = st.slider(f'Select a number for clustering', 5, 55, 10, 1)
 
 st.markdown('Interactive map of clustering of countries based on their national anthem lyrics.')
 
-KMI = []
+data = pd.read_csv('data_label.csv')
+label_kk = 'Label' + str(kk)
 
-for n in [kk]:#range(5, 120, 5):
 
-    km = KMeans(n_clusters = n)
-    km.fit(data[['Y0', 'Y1']])
-    KMI.append(km.inertia_)
+#KMI = []
 
-data['Label'] = km.labels_
+#for n in [kk]:#range(5, 120, 5):
+
+#    km = KMeans(n_clusters = n)
+#    km.fit(data[['Y0', 'Y1']])
+#    KMI.append(km.inertia_)
+
+#data['Label'] = km.labels_
 
 fig = go.Figure(data=go.Scatter(x = data['Y0'],
                                 y = data['Y1'],
                                 mode = 'markers',
-                                marker = dict(color = data['Label'], colorscale='Turbo'),
+                                marker = dict(color = data[label_kk], colorscale='Turbo'),
                                 text = data['Country'], opacity = 0.92, marker_symbol = data['Label']))
 
 fig.update_traces(marker = dict(size = 12,
